@@ -12,6 +12,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  scroll-behavior: smooth; /* Added for smooth scrolling */
 }
 body {
   background-color: #fff;
@@ -31,6 +32,9 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: sticky; /* Added to keep nav on top */
+  top: 0;
+  z-index: 999;
 }
 header h1 {
   font-size: 1.8rem;
@@ -92,10 +96,41 @@ nav a:hover {
   border: 1px solid #fff;
 }
 
+/* ===== CATEGORIES (NEW) ===== */
+.categories {
+  padding: 60px 50px 60px;
+  text-align: center;
+}
+.categories h3 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  letter-spacing: 1px;
+}
+.category-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.category-item {
+  background: #f5f5f5;
+  padding: 20px 40px;
+  border-radius: 5px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.category-item:hover {
+  background: #000;
+  color: #fff;
+}
+
 /* ===== PRODUCTS ===== */
 .products {
   padding: 80px 50px;
   text-align: center;
+  background: #f5f5f5; /* Added background to separate section */
 }
 .products h3 {
   font-size: 2rem;
@@ -108,18 +143,22 @@ nav a:hover {
   gap: 40px;
 }
 .product {
-  background: #f5f5f5;
+  background: #fff; /* Changed from f5f5f5 to stand out */
   padding: 20px;
   border-radius: 10px;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* Added subtle shadow */
 }
 .product:hover {
   background: #000;
   color: #fff;
   transform: translateY(-10px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
 }
 .product img {
   width: 100%;
+  height: 250px; /* Added fixed height */
+  object-fit: cover; /* Ensures images fill space well */
   border-radius: 5px;
   margin-bottom: 15px;
 }
@@ -146,6 +185,74 @@ nav a:hover {
   color: #000;
   border: 1px solid #000;
 }
+
+/* ===== ABOUT (NEW) ===== */
+.about {
+  background: #fff;
+  padding: 80px 50px;
+  text-align: center;
+}
+.about .container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.about h3 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+}
+.about p {
+  font-size: 1.1rem;
+  color: #333;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+/* ===== CONTACT (NEW) ===== */
+.contact {
+  padding: 80px 50px;
+  text-align: center;
+  background: #f5f5f5;
+}
+.contact .container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.contact h3 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+.contact p {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 30px;
+}
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-family: inherit;
+  font-size: 1rem;
+}
+.contact-form button {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 15px 35px;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.3s;
+  width: 100%;
+}
+.contact-form button:hover {
+  background: #333;
+}
+
 
 /* ===== CART PANEL ===== */
 .cart {
@@ -182,6 +289,8 @@ nav a:hover {
 }
 .cart-item img {
   width: 60px;
+  height: 60px; /* Added height */
+  object-fit: cover; /* Added object-fit */
   border-radius: 5px;
 }
 .cart-item-details {
@@ -263,41 +372,50 @@ footer a:hover {
   nav {
     margin-top: 15px;
   }
+  nav a {
+    margin: 0 10px; /* Reduced margin for smaller screens */
+  }
 }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
   <h1>AZM</h1>
   <nav>
-    <a href="#">Home</a>
-    <a href="#">Shop</a>
-    <a href="#">About</a>
-    <a href="#">Contact</a>
+    <a href="#hero">Home</a>
+    <a href="#shop">Shop</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
     <button class="cart-btn" id="openCart">Cart 🛒</button>
   </nav>
 </header>
 
-<!-- HERO -->
-<section class="hero">
+<section class="hero" id="hero">
   <h2>Style in Simplicity</h2>
   <p>Discover minimal fashion pieces that define modern elegance.</p>
   <button>Shop Now</button>
 </section>
 
-<!-- PRODUCTS -->
-<section class="products">
-  <h3>Featured Products</h3>
+<section class="categories">
+  <h3>Shop by Category</h3>
+  <div class="category-grid">
+    <div class="category-item">Shoes</div>
+    <div class="category-item">Apparel</div>
+    <div class="category-item">Accessories</div>
+  </div>
+</section>
+
+<section class="products" id="shop">
+  <h3>Our Products</h3>
   <div class="product-grid">
-    <div class="product" data-name="Black Sneakers" data-price="79.99" data=ali13webp>
+    <div class="product" data-name="Black Sneakers" data-price="79.99" data-img="ali14.jpeg">
       <img src="ali14.jpeg" alt="Black Sneakers">
       <h4>Black Sneakers</h4>
       <p>$79.99</p>
       <button class="add-cart">Add to Cart</button>
     </div>
-    <div class="product" data-name="White Tee" data-price="29.99" data-img="https://via.placeholder.com/300x200.png?text=White+Tee">
+    <div class="product" data-name="White Tee" data-price="29.99" data-img="ali12.webp">
       <img src="ali12.webp" alt="White Tee">
       <h4>White Tee</h4>
       <p>$29.99</p>
@@ -309,10 +427,49 @@ footer a:hover {
       <p>$59.99</p>
       <button class="add-cart">Add to Cart</button>
     </div>
+    <div class="product" data-name="Grey Hoodie" data-price="69.99" data-img="https://via.placeholder.com/300x200.png?text=Grey+Hoodie">
+      <img src="https://via.placeholder.com/300x200.png?text=Grey+Hoodie" alt="Grey Hoodie">
+      <h4>Grey Hoodie</h4>
+      <p>$69.99</p>
+      <button class="add-cart">Add to Cart</button>
+    </div>
+    <div class="product" data-name="Slim-Fit Chinos" data-price="54.99" data-img="https://via.placeholder.com/300x200.png?text=Slim-Fit+Chinos">
+      <img src="https://via.placeholder.com/300x200.png?text=Slim-Fit+Chinos" alt="Slim-Fit Chinos">
+      <h4>Slim-Fit Chinos</h4>
+      <p>$54.99</p>
+      <button class="add-cart">Add to Cart</button>
+    </div>
+    <div class="product" data-name="White Sneakers" data-price="75.99" data-img="https://via.placeholder.com/300x200.png?text=White+Sneakers">
+      <img src="https://via.placeholder.com/300x200.png?text=White+Sneakers" alt="White Sneakers">
+      <h4>White Sneakers</h4>
+      <p>$75.99</p>
+      <button class="add-cart">Add to Cart</button>
+    </div>
   </div>
 </section>
 
-<!-- CART PANEL -->
+<section class="about" id="about">
+  <div class="container">
+    <h3>About AZM</h3>
+    <p>Style in Simplicity. AZM is built on the idea that fashion should be effortless, high-quality, and timeless. We focus on minimalist designs and premium materials to create a wardrobe that works for you, day in and day out.</p>
+    <p>Founded in 2025, our mission is to redefine modern elegance for the everyday man.</p>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="container">
+    <h3>Get in Touch</h3>
+    <p>Have a question? We'd love to hear from you.</p>
+    <form class="contact-form">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+</section>
+
+
 <div class="cart" id="cartPanel">
   <button class="close-cart" id="closeCart">&times;</button>
   <h3>Your Cart</h3>
@@ -321,17 +478,15 @@ footer a:hover {
   <button class="checkout-btn">Checkout</button>
 </div>
 
-<!-- FOOTER -->
 <footer>
-  <p>&copy; 2025 Noir Store | All Rights Reserved</p>
+  <p>&copy; 2025 AZM | All Rights Reserved</p>
   <div>
-    <a href="#">Instagram</a> |
-    <a href="#">Twitter</a> |
-    <a href="#">Facebook</a>
+    <a href="https://instagram.com" target="_blank">Instagram</a> |
+    <a href="https://twitter.com" target="_blank">Twitter</a> |
+    <a href="https://facebook.com" target="_blank">Facebook</a>
   </div>
 </footer>
 
-<!-- ===== JAVASCRIPT ===== -->
 <script>
 const cartBtn = document.getElementById('openCart');
 const closeCartBtn = document.getElementById('closeCart');
@@ -352,7 +507,7 @@ addCartBtns.forEach(btn => {
     const product = btn.parentElement;
     const name = product.getAttribute('data-name');
     const price = parseFloat(product.getAttribute('data-price'));
-    const img = product.getAttribute('data-img');
+    const img = product.getAttribute('data-img'); // This now works for all products
     const existing = cart.find(item => item.name === name);
 
     if (existing) {
@@ -362,6 +517,7 @@ addCartBtns.forEach(btn => {
     }
 
     updateCart();
+    cartPanel.classList.add('open'); // Open cart when item is added
   });
 });
 
@@ -369,6 +525,12 @@ addCartBtns.forEach(btn => {
 function updateCart() {
   cartItemsContainer.innerHTML = '';
   let total = 0;
+
+  if (cart.length === 0) {
+    cartItemsContainer.innerHTML = '<p style="text-align:center; color:#777;">Your cart is empty.</p>';
+    cartTotal.textContent = '0.00';
+    return;
+  }
 
   cart.forEach(item => {
     total += item.price * item.qty;
@@ -379,13 +541,15 @@ function updateCart() {
       <img src="${item.img}" alt="${item.name}">
       <div class="cart-item-details">
         <h4>${item.name}</h4>
-        <p>$${item.price.toFixed(2)} × ${item.qty}</p>
+        <p>$${item.price.toFixed(2)} &times; ${item.qty}</p>
       </div>
-      <button class="remove-btn">&times;</button>
+      <button class="remove-btn" data-name="${item.name}">&times;</button>
     `;
 
-    div.querySelector('.remove-btn').addEventListener('click', () => {
-      cart = cart.filter(p => p.name !== item.name);
+    // Updated remove logic
+    div.querySelector('.remove-btn').addEventListener('click', (e) => {
+      const nameToRemove = e.target.getAttribute('data-name');
+      cart = cart.filter(p => p.name !== nameToRemove);
       updateCart();
     });
 
@@ -398,47 +562,3 @@ function updateCart() {
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
