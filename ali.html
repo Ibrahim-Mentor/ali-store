@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AZM| Minimal Online Shop</title>
+
+<style>
+/* ===== RESET ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+body {
+  background-color: #fff;
+  color: #111;
+  line-height: 1.6;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ===== HEADER ===== */
+header {
+  background: #000;
+  color: #fff;
+  padding: 20px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header h1 {
+  font-size: 1.8rem;
+  letter-spacing: 2px;
+}
+nav a {
+  margin-left: 25px;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+nav a:hover {
+  color: #ccc;
+}
+.cart-btn {
+  background: none;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+.cart-btn:hover {
+  background: #fff;
+  color: #000;
+}
+
+/* ===== HERO ===== */
+.hero {
+  background-color: #111;
+  color: #fff;
+  text-align: center;
+  padding: 100px 30px;
+}
+.hero h2 {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+}
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  color: #ccc;
+}
+.hero button {
+  background: #fff;
+  color: #000;
+  border: none;
+  padding: 15px 35px;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+.hero button:hover {
+  background: #000;
+  color: #fff;
+  border: 1px solid #fff;
+}
+
+/* ===== PRODUCTS ===== */
+.products {
+  padding: 80px 50px;
+  text-align: center;
+}
+.products h3 {
+  font-size: 2rem;
+  margin-bottom: 50px;
+  letter-spacing: 1px;
+}
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+}
+.product {
+  background: #f5f5f5;
+  padding: 20px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+.product:hover {
+  background: #000;
+  color: #fff;
+  transform: translateY(-10px);
+}
+.product img {
+  width: 100%;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+.product h4 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+.product p {
+  color: #555;
+  font-size: 0.95rem;
+  margin-bottom: 15px;
+}
+.product button {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+.product button:hover {
+  background: #fff;
+  color: #000;
+  border: 1px solid #000;
+}
+
+/* ===== CART PANEL ===== */
+.cart {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 350px;
+  height: 100%;
+  background: #fff;
+  color: #000;
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+  transition: right 0.4s ease;
+  padding: 30px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+.cart.open {
+  right: 0;
+}
+.cart h3 {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  text-align: center;
+  border-bottom: 2px solid #000;
+  padding-bottom: 10px;
+}
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+.cart-item img {
+  width: 60px;
+  border-radius: 5px;
+}
+.cart-item-details {
+  flex: 1;
+  margin-left: 10px;
+}
+.cart-item h4 {
+  font-size: 1rem;
+}
+.cart-item p {
+  font-size: 0.9rem;
+  color: #555;
+}
+.remove-btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #999;
+}
+.remove-btn:hover {
+  color: #000;
+}
+.cart-total {
+  text-align: right;
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+.close-cart {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.checkout-btn {
+  width: 100%;
+  margin-top: 20px;
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 12px 0;
+  cursor: pointer;
+  font-weight: bold;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+}
+.checkout-btn:hover {
+  background: #333;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background: #111;
+  color: #ccc;
+  text-align: center;
+  padding: 30px 20px;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+}
+footer a {
+  color: #fff;
+  margin: 0 10px;
+  transition: color 0.3s;
+}
+footer a:hover {
+  color: #aaa;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 700px) {
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+  nav {
+    margin-top: 15px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <h1>AZM</h1>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Shop</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+    <button class="cart-btn" id="openCart">Cart 🛒</button>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <h2>Style in Simplicity</h2>
+  <p>Discover minimal fashion pieces that define modern elegance.</p>
+  <button>Shop Now</button>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products">
+  <h3>Featured Products</h3>
+  <div class="product-grid">
+    <div class="product" data-name="Black Sneakers" data-price="79.99" data=ali13webp>
+      <img src="ali14.jpeg" alt="Black Sneakers">
+      <h4>Black Sneakers</h4>
+      <p>$79.99</p>
+      <button class="add-cart">Add to Cart</button>
+    </div>
+    <div class="product" data-name="White Tee" data-price="29.99" data-img="https://via.placeholder.com/300x200.png?text=White+Tee">
+      <img src="ali12.webp" alt="White Tee">
+      <h4>White Tee</h4>
+      <p>$29.99</p>
+      <button class="add-cart">Add to Cart</button>
+    </div>
+    <div class="product" data-name="Black Backpack" data-price="59.99" data-img="ali13.webp">
+      <img src="ali13.webp" alt="Black Backpack">
+      <h4>Black Backpack</h4>
+      <p>$59.99</p>
+      <button class="add-cart">Add to Cart</button>
+    </div>
+  </div>
+</section>
+
+<!-- CART PANEL -->
+<div class="cart" id="cartPanel">
+  <button class="close-cart" id="closeCart">&times;</button>
+  <h3>Your Cart</h3>
+  <div id="cartItems"></div>
+  <div class="cart-total">Total: $<span id="cartTotal">0.00</span></div>
+  <button class="checkout-btn">Checkout</button>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2025 Noir Store | All Rights Reserved</p>
+  <div>
+    <a href="#">Instagram</a> |
+    <a href="#">Twitter</a> |
+    <a href="#">Facebook</a>
+  </div>
+</footer>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+const cartBtn = document.getElementById('openCart');
+const closeCartBtn = document.getElementById('closeCart');
+const cartPanel = document.getElementById('cartPanel');
+const addCartBtns = document.querySelectorAll('.add-cart');
+const cartItemsContainer = document.getElementById('cartItems');
+const cartTotal = document.getElementById('cartTotal');
+
+let cart = [];
+
+// Open/Close cart
+cartBtn.addEventListener('click', () => cartPanel.classList.add('open'));
+closeCartBtn.addEventListener('click', () => cartPanel.classList.remove('open'));
+
+// Add to cart
+addCartBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const product = btn.parentElement;
+    const name = product.getAttribute('data-name');
+    const price = parseFloat(product.getAttribute('data-price'));
+    const img = product.getAttribute('data-img');
+    const existing = cart.find(item => item.name === name);
+
+    if (existing) {
+      existing.qty++;
+    } else {
+      cart.push({ name, price, img, qty: 1 });
+    }
+
+    updateCart();
+  });
+});
+
+// Update cart display
+function updateCart() {
+  cartItemsContainer.innerHTML = '';
+  let total = 0;
+
+  cart.forEach(item => {
+    total += item.price * item.qty;
+
+    const div = document.createElement('div');
+    div.classList.add('cart-item');
+    div.innerHTML = `
+      <img src="${item.img}" alt="${item.name}">
+      <div class="cart-item-details">
+        <h4>${item.name}</h4>
+        <p>$${item.price.toFixed(2)} × ${item.qty}</p>
+      </div>
+      <button class="remove-btn">&times;</button>
+    `;
+
+    div.querySelector('.remove-btn').addEventListener('click', () => {
+      cart = cart.filter(p => p.name !== item.name);
+      updateCart();
+    });
+
+    cartItemsContainer.appendChild(div);
+  });
+
+  cartTotal.textContent = total.toFixed(2);
+}
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
