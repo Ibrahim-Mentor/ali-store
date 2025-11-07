@@ -1,714 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AZM | Minimal Online Shop</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AZM | Style in Simplicity</title>
     
-    <style>
-        /* =====================================
-           1. CORE DESIGN PRINCIPLES (RESET & ROOT)
-           This is a new, modern CSS reset.
-        ===================================== */
-        
-        :root {
-            /* Typography */
-            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            
-            /* Color Palette (Blueprint) */
-            --color-white: #ffffff;
-            --color-background: #f9f9f9; /* Softer than #f5f5f5 */
-            --color-text-dark: #111111;
-            --color-text-light: #555555;
-            --color-border: #eeeeee;
-            --color-accent: #007aff; /* New: Clean blue accent for CTAs */
-            
-            /* Layout & Whitespace */
-            --padding-section: 80px;
-            --padding-container: 30px;
-            --border-radius: 8px;
-        }
-
-        /* Modern Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: var(--font-family);
-            background-color: var(--color-white);
-            color: var(--color-text-dark);
-            line-height: 1.6;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            font-weight: 600;
-            line-height: 1.2;
-            letter-spacing: -0.5px;
-        }
-
-        /* =====================================
-           2. REUSABLE COMPONENTS (BUTTONS, LAYOUT)
-        ===================================== */
-
-        .container {
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-            padding-left: var(--padding-container);
-            padding-right: var(--padding-container);
-        }
-
-        .section {
-            padding-top: var(--padding-section);
-            padding-bottom: var(--padding-section);
-        }
-        
-        /* Section Title (Reusable) */
-        .section-title {
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        /* Button Styles (Blueprint) */
-        .btn {
-            display: inline-block;
-            padding: 12px 28px;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            text-align: center;
-        }
-
-        .btn-primary {
-            background-color: var(--color-accent);
-            color: var(--color-white);
-            border: 2px solid var(--color-accent);
-        }
-
-        .btn-primary:hover {
-            background-color: var(--color-white);
-            color: var(--color-accent);
-        }
-
-        .btn-secondary {
-            background-color: var(--color-text-dark);
-            color: var(--color-white);
-            border: 2px solid var(--color-text-dark);
-        }
-
-        .btn-secondary:hover {
-            background-color: var(--color-white);
-            color: var(--color-text-dark);
-        }
-
-        /* =====================================
-           3. GLOBAL HEADER (New Design)
-        ===================================== */
-        
-        .global-header {
-            background: var(--color-white);
-            border-bottom: 1px solid var(--color-border);
-            padding: 20px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 var(--padding-container);
-        }
-
-        .header-logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-        }
-
-        .main-nav {
-            display: none; /* Mobile-first: Hide nav, show on desktop */
-        }
-
-        .main-nav-link {
-            font-weight: 600;
-            color: var(--color-text-light);
-            margin: 0 15px;
-            transition: color 0.3s ease;
-        }
-
-        .main-nav-link:hover {
-            color: var(--color-text-dark);
-        }
-
-        .header-icons {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .header-icon {
-            cursor: pointer;
-            font-size: 1.2rem;
-            position: relative;
-        }
-
-        /* =====================================
-           4. PAGE-BY-PAGE SECTIONS (New Design)
-        ===================================== */
-
-        /* ----- HERO SECTION ----- */
-        .hero-section {
-            background-color: var(--color-background);
-            text-align: center;
-            padding: 100px var(--padding-container);
-        }
-
-        .hero-title {
-            font-size: 3.5rem;
-            margin-bottom: 15px;
-        }
-
-        .hero-subtitle {
-            font-size: 1.2rem;
-            color: var(--color-text-light);
-            margin-bottom: 30px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        /* ----- COLLECTIONS (Categories) ----- */
-        .collection-grid {
-            display: grid;
-            grid-template-columns: 1fr; /* Mobile-first: 1 column */
-            gap: 30px;
-        }
-
-        .collection-card {
-            position: relative;
-            background: var(--color-background);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            text-align: center;
-            padding: 40px 20px;
-            transition: all 0.3s ease;
-        }
-        
-        .collection-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.07);
-        }
-
-        .collection-card-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        /* ----- PRODUCTS ----- */
-        .product-section {
-            background-color: var(--color-white);
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: 1fr; /* Mobile-first: 1 column */
-            gap: 30px;
-        }
-
-        .product-card {
-            background: var(--color-white);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            transition: all 0.3s ease;
-            border: 1px solid var(--color-border);
-        }
-        
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.07);
-            border-color: transparent;
-        }
-
-        .product-image {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-        }
-
-        .product-info {
-            padding: 20px;
-        }
-
-        .product-name {
-            font-size: 1.2rem;
-            margin-bottom: 5px;
-        }
-
-        .product-price {
-            font-size: 1rem;
-            color: var(--color-text-light);
-            margin-bottom: 15px;
-        }
-
-        /* ----- ABOUT (Brand Statement) ----- */
-        .about-section {
-            background-color: var(--color-background);
-            text-align: center;
-        }
-
-        .about-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 var(--padding-container);
-        }
-
-        .about-text {
-            font-size: 1.2rem;
-            color: var(--color-text-light);
-            line-height: 1.7;
-        }
-        
-        /* ----- CONTACT ----- */
-        .contact-container {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 0 var(--padding-container);
-        }
-        
-        .contact-form {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
-        
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .form-input {
-            width: 100%;
-            padding: 15px;
-            border: 1px solid var(--color-border);
-            border-radius: var(--border-radius);
-            font-family: var(--font-family);
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-        
-        .form-input:focus {
-            outline: none;
-            border-color: var(--color-accent);
-        }
-        
-        .form-submit {
-            width: 100%;
-            padding: 15px;
-        }
-
-        /* =====================================
-           5. GLOBAL FOOTER (New Design)
-        ===================================== */
-        
-        .global-footer {
-            background-color: var(--color-text-dark);
-            color: #a0a0a0;
-            padding: var(--padding-section) 0 40px;
-        }
-        
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 1fr; /* Mobile-first: 1 column */
-            gap: 40px;
-            margin-bottom: 50px;
-        }
-        
-        .footer-column .footer-title {
-            font-size: 1.1rem;
-            color: var(--color-white);
-            margin-bottom: 20px;
-        }
-        
-        .footer-links {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .footer-link {
-            transition: color 0.3s;
-        }
-        
-        .footer-link:hover {
-            color: var(--color-white);
-        }
-        
-        .footer-bottom {
-            border-top: 1px solid #333;
-            padding-top: 40px;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-        /* =====================================
-           6. CART DRAWER (Restyled)
-        ===================================== */
-        
-        .cart-drawer {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 100%;
-            max-width: 400px; /* Max width */
-            height: 100%;
-            background: var(--color-white);
-            box-shadow: -5px 0 20px rgba(0,0,0,0.1);
-            z-index: 1001;
-            
-            /* Animation */
-            transform: translateX(100%);
-            transition: transform 0.4s ease-in-out;
-            
-            /* Layout */
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .cart-drawer.open {
-            transform: translateX(0);
-        }
-        
-        .cart-header {
-            padding: 20px;
-            border-bottom: 1px solid var(--color-border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .cart-title {
-            font-size: 1.5rem;
-        }
-        
-        .close-cart {
-            font-size: 1.8rem;
-            cursor: pointer;
-            background: none;
-            border: none;
-            color: var(--color-text-light);
-        }
-        
-        .cart-body {
-            flex-grow: 1; /* Makes this area fill space */
-            overflow-y: auto;
-            padding: 20px;
-        }
-
-        .cart-item {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--color-border);
-        }
-        
-        .cart-item-img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: var(--border-radius);
-        }
-        
-        .cart-item-details {
-            flex-grow: 1;
-        }
-        
-        .cart-item-name {
-            font-size: 1rem;
-            font-weight: 600;
-        }
-        
-        .cart-item-info {
-            font-size: 0.9rem;
-            color: var(--color-text-light);
-            margin: 5px 0;
-        }
-        
-        .remove-btn {
-            font-size: 0.8rem;
-            color: #ff3b30;
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
-        
-        .cart-footer {
-            padding: 20px;
-            border-top: 1px solid var(--color-border);
-        }
-        
-        .cart-total {
-            display: flex;
-            justify-content: space-between;
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-
-        /* =====================================
-           7. RESPONSIVE (Mobile -> Desktop)
-        ===================================== */
-        
-        /* Medium screens (Tablets) */
-        @media (min-width: 768px) {
-            .main-nav {
-                display: block; /* Show desktop nav */
-            }
-            
-            .collection-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            
-            .product-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .footer-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-            
-            .contact-form {
-                grid-template-columns: 1fr 1fr; /* Name and Email side-by-side */
-            }
-            .form-group.full-width {
-                grid-column: 1 / -1; /* Make message span full width */
-            }
-        }
-        
-        /* Large screens (Desktops) */
-        @media (min-width: 1024px) {
-            .product-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-    </style>
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="app.js" defer></script>
 </head>
 <body>
 
-    <header class="global-header">
-        <div class="header-container">
-            <h1 class="header-logo">AZM</h1>
-            <nav class="main-nav">
-                <a href="#hero" class="main-nav-link">Home</a>
-                <a href="#shop" class="main-nav-link">Shop</a>
-                <a href="#about" class="main-nav-link">About</a>
-                <a href="#contact" class="main-nav-link">Contact</a>
+    <header class="site-header">
+        <div class="container">
+            <nav class="header-nav">
+                <a href="index.html" class="header-logo">AZM</a>
+                
+                <div class="nav-links-desktop">
+                    <a href="#shop" class="nav-link">Shop</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </div>
+                
+                <div class="header-icons">
+                    <button class="icon-btn" aria-label="Search">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                        </svg>
+                    </button>
+                    <button class="icon-btn cart-btn" id="openCart" aria-label="Open Cart">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.377L2.85 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                        </svg>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </button>
+                    <button class="icon-btn mobile-menu-toggle" id="mobileMenuToggle" aria-label="Open Menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                        </svg>
+                    </button>
+                </div>
             </nav>
-            <div class="header-icons">
-                <span class="header-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
-                      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                    </svg>
-                </span>
-                <span class="header-icon" id="openCart">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
-                      <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.377L2.85 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-                    </svg>
-                </span>
-            </div>
+        </div>
+        
+        <div class="nav-links-mobile" id="mobileNav">
+            <a href="#shop" class="nav-link">Shop</a>
+            <a href="about.html" class="nav-link">About</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="account.html" class="nav-link">Account</a>
         </div>
     </header>
 
     <main>
-        
-        <section class="hero-section" id="hero">
-            <h2 class="hero-title">Style in Simplicity</h2>
-            <p class="hero-subtitle">Discover minimal fashion pieces that define modern elegance. High-quality, effortless, and timeless.</p>
-            <a href="#shop" class="btn btn-primary">Shop The Collection</a>
+
+        <section class="hero-section">
+            <div class="hero-image" style="background-image: url('Ali/img/ali13.webp');"></div>
+            <div class="hero-content">
+                <h1 class="hero-title">Style in Simplicity</h1>
+                <p class="hero-subtitle">Discover minimal fashion pieces that define modern elegance.</p>
+                <a href="#shop" class="btn btn-primary">Shop Now</a>
+            </div>
         </section>
 
         <section class="section">
             <div class="container">
-                <h3 class="section-title">Shop by Category</h3>
+                <h2 class="section-title">Shop by Category</h2>
                 <div class="collection-grid">
-                    <div class="collection-card">
-                        <h4 class="collection-card-title">Apparel</h4>
-                    </div>
-                    <div class="collection-card">
-                        <h4 class="collection-card-title">Shoes</h4>
-                    </div>
-                    <div class="collection-card">
-                        <h4 class="collection-card-title">Accessories</h4>
-                    </div>
+                    <a href="#shop" class="collection-card">
+                        <div class="collection-card-img" style="background-image: url('Ali/img/ali14.jpeg');"></div>
+                        <h3 class="collection-card-title">Shoes</h3>
+                    </a>
+                    <a href="#shop" class="collection-card">
+                        <div class="collection-card-img" style="background-image: url('Ali/img/ali12.webp');"></div>
+                        <h3 class="collection-card-title">Apparel</h3>
+                    </a>
+                    <a href="#shop" class="collection-card">
+                        <div class="collection-card-img" style="background-image: url('Ali/img/ali13.webp');"></div>
+                        <h3 class="collection-card-title">Accessories</h3>
+                    </a>
                 </div>
             </div>
         </section>
-
-        <section class="section" id="shop" style="background-color: var(--color-background);">
+        
+        <section class="section" id="shop">
             <div class="container">
-                <h3 class="section-title">Our Products</h3>
+                <h2 class="section-title">Our Products</h2>
                 <div class="product-grid">
                     
-                    <div class="product-card" data-name="Black Sneakers" data-price="79.99" data-img="ali14.jpeg">
-                        <img src="ali14.jpeg" alt="Black Sneakers" class="product-image">
+                    <div class="product-card" data-name="Black Sneakers" data-price="79.99" data-img="Ali/img/ali14.jpeg">
+                        <img src="Ali/img/ali14.jpeg" alt="Black Sneakers" class="product-img">
                         <div class="product-info">
                             <h4 class="product-name">Black Sneakers</h4>
                             <p class="product-price">$79.99</p>
-                            <button class="btn btn-secondary add-cart">Add to Cart</button>
                         </div>
+                        <button class="btn btn-secondary add-cart">Add to Cart</button>
                     </div>
-                    
-                    <div class="product-card" data-name="White Tee" data-price="29.99" data-img="ali12.webp">
-                        <img src="ali12.webp" alt="White Tee" class="product-image">
+
+                    <div class="product-card" data-name="White Tee" data-price="29.99" data-img="Ali/img/ali12.webp">
+                        <img src="Ali/img/ali12.webp" alt="White Tee" class="product-img">
                         <div class="product-info">
                             <h4 class="product-name">White Tee</h4>
                             <p class="product-price">$29.99</p>
-                            <button class="btn btn-secondary add-cart">Add to Cart</button>
                         </div>
+                        <button class="btn btn-secondary add-cart">Add to Cart</button>
                     </div>
-                    
-                    <div class="product-card" data-name="Black Backpack" data-price="59.99" data-img="ali13.webp">
-                        <img src="ali13.webp" alt="Black Backpack" class="product-image">
+
+                    <div class="product-card" data-name="Black Backpack" data-price="59.99" data-img="Ali/img/ali13.webp">
+                        <img src="Ali/img/ali13.webp" alt="Black Backpack" class="product-img">
                         <div class="product-info">
                             <h4 class="product-name">Black Backpack</h4>
                             <p class="product-price">$59.99</p>
-                            <button class="btn btn-secondary add-cart">Add to Cart</button>
                         </div>
+                        <button class="btn btn-secondary add-cart">Add to Cart</button>
                     </div>
-                    
+
                     <div class="product-card" data-name="Grey Hoodie" data-price="69.99" data-img="https://via.placeholder.com/400x400.png?text=Grey+Hoodie">
-                        <img src="https://via.placeholder.com/400x400.png?text=Grey+Hoodie" alt="Grey Hoodie" class="product-image">
+                        <img src="https://via.placeholder.com/400x400.png?text=Grey+Hoodie" alt="Grey Hoodie" class="product-img">
                         <div class="product-info">
                             <h4 class="product-name">Grey Hoodie</h4>
                             <p class="product-price">$69.99</p>
-                            <button class="btn btn-secondary add-cart">Add to Cart</button>
                         </div>
+                        <button class="btn btn-secondary add-cart">Add to Cart</button>
                     </div>
-                    
-                    <div class="product-card" data-name="Slim-Fit Chinos" data-price="54.99" data-img="https://via.placeholder.com/400x400.png?text=Slim-Fit+Chinos">
-                        <img src="https://via.placeholder.com/400x400.png?text=Slim-Fit+Chinos" alt="Slim-Fit Chinos" class="product-image">
-                        <div class="product-info">
-                            <h4 class="product-name">Slim-Fit Chinos</h4>
-                            <p class="product-price">$54.99</p>
-                            <button class="btn btn-secondary add-cart">Add to Cart</button>
-                        </div>
-                    </div>
-                    
-                    <div class="product-card" data-name="White Sneakers" data-price="75.99" data-img="https://via.placeholder.com/400x400.png?text=White+Sneakers">
-                        <img src="https://via.placeholder.com/400x400.png?text=White+Sneakers" alt="White Sneakers" class="product-image">
-                        <div class="product-info">
-                            <h4 class="product-name">White Sneakers</h4>
-                            <p class="product-price">$75.99</p>
-                            <button class="btn btn-secondary add-cart">Add to Cart</button>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </section>
 
-        <section class="section about-section" id="about">
-            <div class="about-container">
-                <h3 class="section-title">About AZM</h3>
-                <p class="about-text">
-                    AZM is built on the idea that fashion should be effortless, high-quality, and timeless. 
-                    We focus on minimalist designs and premium materials to create a wardrobe that works for you, day in and day out.
-                </p>
-            </div>
-        </section>
-
-        <section class="section" id="contact">
-            <div class="contact-container">
-                <h3 class="section-title">Get in Touch</h3>
-                <form class="contact-form">
-                    <div class="form-group">
-                        <input type="text" placeholder="Your Name" class="form-input" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" placeholder="Your Email" class="form-input" required>
-                    </div>
-                    <div class="form-group full-width">
-                        <textarea rows="5" placeholder="Your Message" class="form-input" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary form-submit full-width">Send Message</button>
-                </form>
+        <section class="section brand-statement">
+            <div class="container">
+                <h2 class="brand-title">Effortless. High-Quality. Timeless.</h2>
+                <p class="brand-text">AZM is built on the idea that fashion should be minimalist and made to last. We focus on premium materials to create a wardrobe that works for you, day in and day out.</p>
+                <a href="about.html" class="btn btn-primary-outline">About Us</a>
             </div>
         </section>
 
     </main>
 
-    <footer class="global-footer">
+    <footer class="site-footer">
         <div class="container">
             <div class="footer-grid">
-                
                 <div class="footer-column">
                     <h5 class="footer-title">Shop</h5>
-                    <ul class="footer-links">
-                        <li><a href="#shop" class="footer-link">Apparel</a></li>
-                        <li><a href="#shop" class="footer-link">Shoes</a></li>
-                        <li><a href="#shop" class="footer-link">Accessories</a></li>
-                    </ul>
+                    <a href="#shop" class="footer-link">Apparel</a>
+                    <a href="#shop" class="footer-link">Shoes</a>
+                    <a href="#shop" class="footer-link">Accessories</a>
                 </div>
-                
                 <div class="footer-column">
                     <h5 class="footer-title">Help</h5>
-                    <ul class="footer-links">
-                        <li><a href="#" class="footer-link">FAQ</a></li>
-                        <li><a href="#contact" class="footer-link">Contact</a></li>
-                        <li><a href="#" class="footer-link">Shipping</a></li>
-                        <li><a href="#" class="footer-link">Returns</a></li>
-                    </ul>
+                    <a href="faq.html" class="footer-link">FAQ</a>
+                    <a href="contact.html" class="footer-link">Contact Us</a>
+                    <a href="shipping.html" class="footer-link">Shipping Policy</a>
+                    <a href="refunds.html" class="footer-link">Refund Policy</a>
                 </div>
-                
                 <div class="footer-column">
                     <h5 class="footer-title">Company</h5>
-                    <ul class="footer-links">
-                        <li><a href="#about" class="footer-link">About Us</a></li>
-                        <li><a href="#" class="footer-link">Terms of Service</a></li>
-                        <li><a href="#" class="footer-link">Privacy Policy</a></li>
-                    </ul>
+                    <a href="about.html" class="footer-link">About Us</a>
+                    <a href="terms.html" class="footer-link">Terms of Service</a>
+                    <a href="privacy.html" class="footer-link">Privacy Policy</a>
                 </div>
-                
                 <div class="footer-column">
-                    <h5 class="footer-title">Connect</h5>
-                    <ul class="footer-links">
-                        <li><a href="#" class="footer-link">Instagram</a></li>
-                        <li><a href="#" class="footer-link">Twitter</a></li>
-                        <li><a href="#" class="footer-link">Facebook</a></li>
-                    </ul>
+                    <h5 class="footer-title">Join Our List</h5>
+                    <p>Get updates on new arrivals and special offers.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your Email" class="newsletter-input" required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
                 </div>
-
             </div>
+            
             <div class="footer-bottom">
-                <p>&copy; 2025 AZM | All Rights Reserved</p>
+                <div class="footer-socials">
+                    <a href="#" aria-label="Instagram">IG</a>
+                    <a href="#" aria-label="Twitter">TW</a>
+                    <a href="#" aria-label="Facebook">FB</a>
+                </div>
+                <p>&copy; 2025 AZM. All Rights Reserved.</p>
+                <div class="footer-payments">
+                    <span>Visa</span>
+                    <span>Mastercard</span>
+                    <span>PayPal</span>
+                </div>
             </div>
         </div>
     </footer>
@@ -716,100 +187,19 @@
     <div class="cart-drawer" id="cartPanel">
         <div class="cart-header">
             <h3 class="cart-title">Your Cart</h3>
-            <button class="close-cart" id="closeCart">&times;</button>
+            <button class="icon-btn close-cart" id="closeCart" aria-label="Close Cart">&times;</button>
         </div>
-        
         <div class="cart-body" id="cartItems">
             </div>
-        
         <div class="cart-footer">
-            <div class="cart-total">
-                <span>Total</span>
-                <span>$<span id="cartTotal">0.00</span></span>
+            <div class="cart-subtotal">
+                <span>Subtotal</span>
+                <span id="cartTotal">$0.00</span>
             </div>
-            <button class="btn btn-primary" style="width: 100%;">Checkout</button>
+            <a href="checkout.html" class="btn btn-primary checkout-btn">Proceed to Checkout</a>
         </div>
     </div>
-
-
-    <script>
-        const cartBtn = document.getElementById('openCart');
-        const closeCartBtn = document.getElementById('closeCart');
-        const cartPanel = document.getElementById('cartPanel');
-        const addCartBtns = document.querySelectorAll('.add-cart');
-        const cartItemsContainer = document.getElementById('cartItems');
-        const cartTotal = document.getElementById('cartTotal');
-
-        let cart = []; // This will store our cart items
-
-        // Open/Close cart
-        cartBtn.addEventListener('click', () => cartPanel.classList.add('open'));
-        closeCartBtn.addEventListener('click', () => cartPanel.classList.remove('open'));
-
-        // Add to cart
-        addCartBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Get product info from the 'data-' attributes
-                // **UPDATED:** Using .closest('.product-card')
-                const product = btn.closest('.product-card'); 
-                const name = product.getAttribute('data-name');
-                const price = parseFloat(product.getAttribute('data-price'));
-                const img = product.getAttribute('data-img');
-                
-                // Check if item already exists in cart
-                const existing = cart.find(item => item.name === name);
-
-                if (existing) {
-                    existing.qty++; // Increase quantity
-                } else {
-                    cart.push({ name, price, img, qty: 1 }); // Add new item
-                }
-
-                updateCart();
-                cartPanel.classList.add('open'); // Open cart when item is added
-            });
-        });
-
-        // Update cart display
-        function updateCart() {
-            cartItemsContainer.innerHTML = ''; // Clear the cart display
-            let total = 0;
-
-            if (cart.length === 0) {
-                cartItemsContainer.innerHTML = '<p style="text-align:center; color:#777;">Your cart is empty.</p>';
-                cartTotal.textContent = '0.00';
-                return;
-            }
-
-            cart.forEach(item => {
-                total += item.price * item.qty;
-
-                // **UPDATED:** New HTML structure for the cart item
-                const div = document.createElement('div');
-                div.classList.add('cart-item');
-                div.innerHTML = `
-                    <img src="${item.img}" alt="${item.name}" class="cart-item-img">
-                    <div class="cart-item-details">
-                        <h4 class="cart-item-name">${item.name}</h4>
-                        <p class="cart-item-info">$${item.price.toFixed(2)} &times; ${item.qty}</p>
-                        <button class="remove-btn" data-name="${item.name}">Remove</button>
-                    </div>
-                `;
-
-                // Add event listener for the new remove button
-                div.querySelector('.remove-btn').addEventListener('click', (e) => {
-                    const nameToRemove = e.target.getAttribute('data-name');
-                    // Remove item from cart array
-                    cart = cart.filter(p => p.name !== nameToRemove);
-                    updateCart(); // Re-render the cart
-                });
-
-                cartItemsContainer.appendChild(div);
-            });
-
-            cartTotal.textContent = total.toFixed(2);
-        }
-    </script>
+    <div class="cart-overlay" id="cartOverlay"></div>
 
 </body>
 </html>
