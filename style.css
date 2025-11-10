@@ -629,3 +629,192 @@ h1, h2, h3, h4, h5, h6 {
         flex-direction: row;
     }
 }
+
+/* =====================================
+   8. DEDICATED CART PAGE
+   ===================================== */
+
+.cart-page-section {
+    background-color: var(--color-background); /* Use a light bg */
+    min-height: 60vh;
+}
+
+.cart-page-title {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.cart-page-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Mobile-first */
+    gap: 30px;
+}
+
+/* --- Cart Items Column --- */
+.cart-page-header {
+    display: none; /* Hide on mobile */
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--color-border);
+    font-weight: 600;
+    color: var(--color-text-light);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+.header-quantity, .header-total {
+    text-align: right;
+}
+
+.cart-page-item {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Mobile layout */
+    gap: 15px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.item-product {
+    display: flex;
+    gap: 15px;
+    grid-column: 1 / -1; /* Span full width on mobile */
+}
+
+.item-img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-border);
+}
+
+.item-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+.item-price {
+    font-size: 1rem;
+    color: var(--color-text-light);
+    margin: 4px 0;
+}
+
+.item-remove-btn {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.item-remove-btn:hover {
+    color: #ff0000;
+}
+
+.item-quantity {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Align right on mobile */
+    grid-column: 1;
+}
+
+.item-qty-input {
+    width: 60px;
+    padding: 8px;
+    font-size: 1rem;
+    text-align: center;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    margin-left: auto; /* Push to right */
+}
+
+.item-total {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Align right on mobile */
+    font-size: 1.1rem;
+    font-weight: 600;
+    grid-column: 2;
+}
+
+.continue-shopping-btn {
+    margin-top: 25px;
+    background: var(--color-white);
+}
+
+/* --- Summary Column --- */
+.order-summary-box {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    position: sticky;
+    top: 100px; /* Sticks under the header */
+}
+
+.summary-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 15px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+.summary-row span:last-child {
+    font-weight: 600;
+    color: var(--color-text);
+}
+.summary-row.total-row {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--color-border);
+}
+
+.order-summary-box .checkout-btn {
+    width: 100%;
+}
+
+
+/* Responsive styles for cart page */
+@media (min-width: 768px) {
+    .cart-page-title {
+        text-align: left;
+    }
+
+    .cart-page-grid {
+        grid-template-columns: 2fr 1fr; /* 2 columns on desktop */
+    }
+    
+    .cart-page-header {
+        display: grid; /* Show on desktop */
+    }
+    
+    .cart-page-item {
+        grid-template-columns: 2fr 1fr 1fr; /* 3 columns on desktop */
+        align-items: center;
+    }
+    
+    .item-product {
+        grid-column: 1; /* Reset span */
+    }
+
+    .item-quantity {
+        grid-column: 2;
+        justify-content: flex-end; /* Align right */
+    }
+    .item-qty-input {
+        margin-left: 0;
+    }
+    
+    .item-total {
+        grid-column: 3;
+    }
+}

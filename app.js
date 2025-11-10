@@ -1,10 +1,48 @@
 // Wait for the DOM to be fully loaded before running scripts
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- MOBILE MENU TOGGLE ---
+    // --- 1. GLOBAL ELEMENTS ---
     const menuToggle = document.getElementById('mobileMenuToggle');
     const mobileNav = document.getElementById('mobileNav');
+    
+    // Cart Drawer Elements
+    const cartBtn = document.getElementById('openCart');
+    const closeCartBtn = document.getElementById('closeCart');
+    const cartPanel = document.getElementById('cartPanel');
+    const cartOverlay = document.getElementById('cartOverlay');
+    const addCartBtns = document.querySelectorAll('.add-cart');
+    
+    // Cart Data Elements (shared)
+    const cartCountEl = document.getElementById('cartCount');
+    
+    // Cart Drawer Elements
+    const cartItemsContainer = document.getElementById('cartItems'); // In drawer
+    const cartTotalEl = document.getElementById('cartTotal'); // In drawer
 
+    // Cart Page Elements
+    const cartPageItemsContainer = document.getElementById('cart-page-items'); // On cart.html
+    const summarySubtotalEl = document.getElementById('summary-subtotal'); // On cart.html
+    const summaryTotalEl = document.getElementById('summary-total'); // On cart.html
+
+    // --- 2. GLOBAL CART STATE ---
+    
+    // Load cart from localStorage or start with an empty array
+    let cart = loadCart();
+
+    // --- 3. FUNCTIONS ---
+
+    // Load cart from localStorage
+    function loadCart() {
+        const cartJson = localStorage.getItem('azmCart');
+        return cartJson ? JSON.parse(cartJson) : [];
+    }
+
+    // Save cart to localStorage
+    function saveCart() {
+        localStorage.setItem('azmCart', JSON.stringify(cart));
+    }
+
+    // --- MOBILE MENU ---
     if (menuToggle && mobileNav) {
         menuToggle.addEventListener('click', () => {
             mobileNav.classList.toggle('is-open');
@@ -12,71 +50,77 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- CART DRAWER LOGIC ---
-    const cartBtn = document.getElementById('openCart');
-    const closeCartBtn = document.getElementById('closeCart');
-    const cartPanel = document.getElementById('cartPanel');
-    const cartOverlay = document.getElementById('cartOverlay');
-    const addCartBtns = document.querySelectorAll('.add-cart');
-    const cartItemsContainer = document.getElementById('cartItems');
-    const cartTotalEl = document.getElementById('cartTotal');
-    const cartCountEl = document.getElementById('cartCount');
-
-    let cart = []; // This will store our cart items
-
-    // Function to open the cart
     const openCart = () => {
         cartPanel.classList.add('is-open');
         cartOverlay.classList.add('is-open');
     };
 
-    // Function to close the cart
     const closeCart = () => {
         cartPanel.classList.remove('is-open');
         cartOverlay.classList.remove('is-open');
     };
 
-    // Open/Close cart
     if (cartBtn) cartBtn.addEventListener('click', openCart);
     if (closeCartBtn) closeCartBtn.addEventListener('click', closeCart);
     if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
 
-    // Add to cart
+    // --- ADD TO CART ---
     addCartBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
-            // Get product info from the 'data-' attributes
             const product = e.target.closest('.product-card');
             const name = product.getAttribute('data-name');
             const price = parseFloat(product.getAttribute('data-price'));
             const img = product.getAttribute('data-img');
             
-            // Check if item already exists in cart
             const existing = cart.find(item => item.name === name);
 
             if (existing) {
-                existing.qty++; // Increase quantity
+                existing.qty++;
             } else {
-                cart.push({ name, price, img, qty: 1 }); // Add new item
+                cart.push({ name, price, img, qty: 1 });
             }
 
-            updateCart();
-            openCart(); // Open cart when item is added
+            saveCart();
+            updateAllCartDisplays();
+            openCart();
         });
     });
 
-    // Update cart display
-    function updateCart() {
-        cartItemsContainer.innerHTML = ''; // Clear the cart display
+    // --- UNIVERSAL UPDATE FUNCTION ---
+    // This one function will update all parts of the site that show cart info
+    function updateAllCartDisplays() {
         let total = 0;
         let totalItems = 0;
 
+        cart.forEach(item => {
+            total += item.price * item.qty;
+            totalItems += item.qty;
+        });
+
+        // 1. Update Header Cart Count (Global)
+        if (cartCountEl) {
+            cartCountEl.textContent = totalItems;
+        }
+
+        // 2. Update Cart Drawer (if it exists on the page)
+        if (cartItemsContainer) {
+            renderCartDrawer(total, totalItems);
+        }
+
+        // 3. Update Dedicated Cart Page (if it exists on the page)
+        if (cartPageItemsContainer) {
+            renderCartPage(total);
+        }
+    }
+
+    // --- RENDER CART DRAWER ---
+    function renderCartDrawer(total, totalItems) {
+        cartItemsContainer.innerHTML = ''; // Clear drawer
+        
         if (cart.length === 0) {
             cartItemsContainer.innerHTML = '<p class="cart-empty-msg">Your cart is empty.</p>';
         } else {
             cart.forEach(item => {
-                total += item.price * item.qty;
-                totalItems += item.qty;
-
-                // Create new cart item element
                 const div = document.createElement('div');
                 div.classList.add('cart-item');
                 div.innerHTML = `
@@ -87,24 +131,89 @@ document.addEventListener('DOMContentLoaded', () => {
                         <button class="cart-item-remove" data-name="${item.name}">Remove</button>
                     </div>
                 `;
-
-                // Add event listener for the new remove button
-                div.querySelector('.cart-item-remove').addEventListener('click', (e) => {
-                    const nameToRemove = e.target.getAttribute('data-name');
-                    cart = cart.filter(p => p.name !== nameToRemove);
-                    updateCart(); // Re-render the cart
+                div.querySelector('.cart-item-remove').addEventListener('click', () => {
+                    removeFromCart(item.name);
                 });
-
                 cartItemsContainer.appendChild(div);
             });
         }
-
-        // Update totals
-        cartTotalEl.textContent = `$${total.toFixed(2)}`;
-        cartCountEl.textContent = totalItems;
+        
+        if (cartTotalEl) {
+            cartTotalEl.textContent = `$${total.toFixed(2)}`;
+        }
     }
-    
-    // Initial cart update on page load (in case cart is saved in localStorage)
-    updateCart(); 
+
+    // --- RENDER DEDICATED CART PAGE ---
+    function renderCartPage(total) {
+        cartPageItemsContainer.innerHTML = ''; // Clear page content
+
+        if (cart.length === 0) {
+            cartPageItemsContainer.innerHTML = '<p class="cart-empty-msg">Your cart is empty. <a href="index.html#shop">Go shopping!</a></p>';
+        } else {
+            cart.forEach(item => {
+                const div = document.createElement('div');
+                div.classList.add('cart-page-item');
+                const itemTotal = item.price * item.qty;
+                
+                div.innerHTML = `
+                    <div class="item-product">
+                        <img src="${item.img}" alt="${item.name}" class="item-img">
+                        <div>
+                            <h4 class="item-name">${item.name}</h4>
+                            <p class="item-price">$${item.price.toFixed(2)}</p>
+                            <button class="item-remove-btn" data-name="${item.name}">Remove</button>
+                        </div>
+                    </div>
+                    <div class="item-quantity">
+                        <input type="number" class="item-qty-input" value="${item.qty}" min="1" data-name="${item.name}">
+                    </div>
+                    <div class="item-total">$${itemTotal.toFixed(2)}</div>
+                `;
+                
+                // Add event listeners for this new item
+                div.querySelector('.item-remove-btn').addEventListener('click', () => {
+                    removeFromCart(item.name);
+                });
+                
+                div.querySelector('.item-qty-input').addEventListener('change', (e) => {
+                    const newQty = parseInt(e.target.value);
+                    updateCartQuantity(item.name, newQty);
+                });
+
+                cartPageItemsContainer.appendChild(div);
+            });
+        }
+
+        // Update summary
+        if (summarySubtotalEl) summarySubtotalEl.textContent = `$${total.toFixed(2)}`;
+        if (summaryTotalEl) summaryTotalEl.textContent = `$${total.toFixed(2)}`;
+    }
+
+
+    // --- MODIFY CART FUNCTIONS ---
+
+    function removeFromCart(nameToRemove) {
+        cart = cart.filter(p => p.name !== nameToRemove);
+        saveCart();
+        updateAllCartDisplays();
+    }
+
+    function updateCartQuantity(name, newQty) {
+        const item = cart.find(p => p.name === name);
+        if (item) {
+            if (newQty > 0) {
+                item.qty = newQty;
+            } else {
+                // If qty is 0 or less, remove it
+                cart = cart.filter(p => p.name !== name);
+            }
+            saveCart();
+            updateAllCartDisplays();
+        }
+    }
+
+    // --- 4. INITIAL PAGE LOAD ---
+    // Run this function once when the page loads to show the correct cart state
+    updateAllCartDisplays(); 
 
 });
