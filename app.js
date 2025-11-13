@@ -109,8 +109,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('pdp-name').textContent = name;
         document.getElementById('pdp-price').textContent = `$${price.toFixed(2)}`;
         document.getElementById('pdp-description').textContent = desc;
+        
+        // 3. Set page title
+        document.title = `${name} | AZM`;
 
-        // 3. Add click listener for the PDP "Add to Cart" button
+        // 4. Add click listener for the PDP "Add to Cart" button
         pdpAddToCartBtn.addEventListener('click', () => {
             addItemToCart(name, price, img);
         });
@@ -144,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- 6. RENDER FUNCTIONS (No changes from your file) ---
+    // --- 6. RENDER FUNCTIONS ---
     
     // --- RENDER CART DRAWER ---
     function renderCartDrawer(total, totalItems) {
@@ -181,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cartPageItemsContainer.innerHTML = ''; // Clear page content
 
         if (cart.length === 0) {
-            cartPageItemsContainer.innerHTML = '<p class="cart-empty-msg">Your cart is empty. <a href="index.html#shop">Go shopping!</a></p>';
+            cartPageItemsContainer.innerHTML = '<p class="cart-empty-msg" style="text-align: center; padding: 40px 0; color: var(--color-text-light);">Your cart is empty. <a href="index.html#shop" style="color: var(--color-accent);">Go shopping!</a></p>';
         } else {
             cart.forEach(item => {
                 const div = document.createElement('div');
@@ -223,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // --- 7. MODIFY CART FUNCTIONS (No changes from your file) ---
+    // --- 7. MODIFY CART FUNCTIONS ---
 
     function removeFromCart(nameToRemove) {
         cart = cart.filter(p => p.name !== nameToRemove);
@@ -244,8 +247,27 @@ document.addEventListener('DOMContentLoaded', () => {
             updateAllCartDisplays();
         }
     }
+    
+    // --- 8. NEW: "GUCCI-STYLE" SCROLL ANIMATION ---
+    const animatedElements = document.querySelectorAll("[data-animate]");
 
-    // --- 8. INITIAL PAGE LOAD ---
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                observer.unobserve(entry.target); // Stop observing once animated
+            }
+        });
+    }, {
+        threshold: 0.1 // Trigger when 10% of the element is visible
+    });
+
+    animatedElements.forEach(el => {
+        observer.observe(el);
+    });
+
+
+    // --- 9. INITIAL PAGE LOAD ---
     // Run this function once when the page loads to show the correct cart state
     updateAllCartDisplays(); 
 

@@ -5,12 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product | AZM</title>
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="product.css"> <script src="app.js" defer></script>
+    
+    <script src="app.js" defer></script>
 </head>
 <body>
 
@@ -59,11 +56,11 @@
             <div class="container">
                 <div class="pdp-grid">
                     
-                    <div class="pdp-image-column">
+                    <div class="pdp-image-column" data-animate>
                         <img src="" alt="" id="pdp-image">
                     </div>
 
-                    <div class="pdp-info-column">
+                    <div class="pdp-info-column" data-animate>
                         <h1 id="pdp-name"></h1>
                         <p id="pdp-price"></p>
                         
@@ -81,10 +78,69 @@
     </main>
 
     <footer class="site-footer">
-        </footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h5 class="footer-title">Shop</h5>
+                    <a href="index.html#shop" class="footer-link">Apparel</a>
+                    <a href="index.html#shop" class="footer-link">Shoes</a>
+                    <a href="index.html#shop" class="footer-link">Accessories</a>
+                </div>
+                <div class="footer-column">
+                    <h5 class="footer-title">Help</h5>
+                    <a href="faq.html" class="footer-link">FAQ</a>
+                    <a href="contact.html" class="footer-link">Contact Us</a>
+                    <a href="shipping-returns.html" class="footer-link">Shipping Policy</a>
+                    <a href="shipping-returns.html" class="footer-link">Refund Policy</a>
+                </div>
+                <div class="footer-column">
+                    <h5 class="footer-title">Company</h5>
+                    <a href="about.html" class="footer-link">About Us</a>
+                    <a href="terms.html" class="footer-link">Terms of Service</a>
+                    <a href="privacy.html" class="footer-link">Privacy Policy</a>
+                </div>
+                <div class="footer-column">
+                    <h5 class="footer-title">Join Our List</h5>
+                    <p>Get updates on new arrivals and special offers.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your Email" class="newsletter-input" required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-socials">
+                    <a href="#" aria-label="Instagram">IG</a>
+                    <a href="#" aria-label="Twitter">TW</a>
+                    <a href="#" aria-label="Facebook">FB</a>
+                </div>
+                <p>&copy; 2025 AZM. All Rights Reserved.</p>
+                <div class="footer-payments">
+                    <span>Visa</span>
+                    <span>Mastercard</span>
+                    <span>PayPal</span>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <div class="cart-drawer" id="cartPanel">
+        <div class="cart-header">
+            <h3 class="cart-title">Your Cart</h3>
+            <button class="icon-btn close-cart" id="closeCart" aria-label="Close Cart">&times;</button>
         </div>
+        <div class="cart-body" id="cartItems">
+            </div>
+        <div class="cart-footer">
+            <div class="cart-subtotal">
+                <span>Subtotal</span>
+                <span id="cartTotal">$0.00</span>
+            </div>
+            <a href="cart.html" class="btn btn-primary-outline" style="width: 100%; margin-bottom: 10px;">View Full Cart</a>
+            <a href="checkout.html" class="btn btn-primary checkout-btn">Proceed to Checkout</a>
+        </div>
+    </div>
     <div class="cart-overlay" id="cartOverlay"></div>
 
 </body>
