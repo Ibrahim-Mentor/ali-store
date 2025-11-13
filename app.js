@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeCartBtn = document.getElementById('closeCart');
     const cartPanel = document.getElementById('cartPanel');
     const cartOverlay = document.getElementById('cartOverlay');
-    const addCartBtns = document.querySelectorAll('.add-cart');
+    const addCartBtns = document.querySelectorAll('.add-cart'); // On index.html
     
     // Cart Data Elements (shared)
     const cartCountEl = document.getElementById('cartCount');
@@ -64,7 +64,22 @@ document.addEventListener('DOMContentLoaded', () => {
     if (closeCartBtn) closeCartBtn.addEventListener('click', closeCart);
     if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
 
-    // --- ADD TO CART ---
+    // --- REUSABLE "ADD TO CART" FUNCTION ---
+    function addItemToCart(name, price, img) {
+        const existing = cart.find(item => item.name === name);
+
+        if (existing) {
+            existing.qty++;
+        } else {
+            cart.push({ name, price, img, qty: 1 });
+        }
+
+        saveCart();
+        updateAllCartDisplays();
+        openCart();
+    }
+
+    // --- ADD TO CART (FROM PRODUCT GRID on index.html) ---
     addCartBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
             const product = e.target.closest('.product-card');
@@ -72,21 +87,37 @@ document.addEventListener('DOMContentLoaded', () => {
             const price = parseFloat(product.getAttribute('data-price'));
             const img = product.getAttribute('data-img');
             
-            const existing = cart.find(item => item.name === name);
-
-            if (existing) {
-                existing.qty++;
-            } else {
-                cart.push({ name, price, img, qty: 1 });
-            }
-
-            saveCart();
-            updateAllCartDisplays();
-            openCart();
+            addItemToCart(name, price, img);
         });
     });
 
-    // --- UNIVERSAL UPDATE FUNCTION ---
+    // --- 4. PDP (PRODUCT DETAIL PAGE) LOGIC ---
+    const pdpAddToCartBtn = document.getElementById('pdp-add-to-cart');
+    
+    // This code only runs if we are on the product.html page
+    if (pdpAddToCartBtn) {
+        // 1. Get data from URL to populate page
+        const params = new URLSearchParams(window.location.search);
+        const name = params.get('name');
+        const price = parseFloat(params.get('price'));
+        const img = params.get('img');
+        const desc = params.get('desc'); // Get the new description
+
+        // 2. Populate the page elements
+        document.getElementById('pdp-image').src = img;
+        document.getElementById('pdp-image').alt = name;
+        document.getElementById('pdp-name').textContent = name;
+        document.getElementById('pdp-price').textContent = `$${price.toFixed(2)}`;
+        document.getElementById('pdp-description').textContent = desc;
+
+        // 3. Add click listener for the PDP "Add to Cart" button
+        pdpAddToCartBtn.addEventListener('click', () => {
+            addItemToCart(name, price, img);
+        });
+    }
+
+
+    // --- 5. UNIVERSAL UPDATE FUNCTION ---
     // This one function will update all parts of the site that show cart info
     function updateAllCartDisplays() {
         let total = 0;
@@ -113,6 +144,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // --- 6. RENDER FUNCTIONS (No changes from your file) ---
+    
     // --- RENDER CART DRAWER ---
     function renderCartDrawer(total, totalItems) {
         cartItemsContainer.innerHTML = ''; // Clear drawer
@@ -190,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // --- MODIFY CART FUNCTIONS ---
+    // --- 7. MODIFY CART FUNCTIONS (No changes from your file) ---
 
     function removeFromCart(nameToRemove) {
         cart = cart.filter(p => p.name !== nameToRemove);
@@ -212,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- 4. INITIAL PAGE LOAD ---
+    // --- 8. INITIAL PAGE LOAD ---
     // Run this function once when the page loads to show the correct cart state
     updateAllCartDisplays(); 
 

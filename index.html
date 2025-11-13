@@ -5,7 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AZM | Style in Simplicity</title>
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .hero-title, .section-title, .brand-title {
+            font-family: 'Playfair Display', serif;
+        }
+        .hero-title {
+            font-size: 3rem; /* Make it more impactful */
+        }
+        .section-title {
+            font-size: 2.25rem; /* Slightly larger */
+        }
+        .brand-title {
+            font-size: 2rem; /* Slightly larger */
+        }
+
+        /* Responsive font sizes for headings */
+        @media (min-width: 768px) {
+            .hero-title {
+                font-size: 4rem;
+            }
+            .section-title {
+                font-size: 2.75rem;
+            }
+        }
+    </style>
     
     <script src="app.js" defer></script>
 </head>
@@ -54,11 +83,11 @@
     <main>
 
         <section class="hero-section">
-            <div class="hero-image" style="background-image: url('Ali/img/ali13.webp');"></div>
+            <div class="hero-image" style="background-image: url('img/ali12.webp'); background-position: center 30%;"></div>
             <div class="hero-content">
                 <h1 class="hero-title">Style in Simplicity</h1>
                 <p class="hero-subtitle">Discover minimal fashion pieces that define modern elegance.</p>
-                <a href="#shop" class="btn btn-primary">Shop Now</a>
+                <a href="#shop" class="btn btn-primary">Shop The Collection</a>
             </div>
         </section>
 
@@ -67,16 +96,16 @@
                 <h2 class="section-title">Shop by Category</h2>
                 <div class="collection-grid">
                     <a href="#shop" class="collection-card">
-                        <div class="collection-card-img" style="background-image: url('Ali/img/ali14.jpeg');"></div>
-                        <h3 class="collection-card-title">Shoes</h3>
+                        <div class="collection-card-img" style="background-image: url('img/ali14.jpeg');"></div>
+                        <h3 class="collection-card-title">The Sneakers</h3>
                     </a>
                     <a href="#shop" class="collection-card">
-                        <div class="collection-card-img" style="background-image: url('Ali/img/ali12.webp');"></div>
-                        <h3 class="collection-card-title">Apparel</h3>
+                        <div class="collection-card-img" style="background-image: url('img/ali12.webp');"></div>
+                        <h3 class="collection-card-title">The Tee</h3>
                     </a>
                     <a href="#shop" class="collection-card">
-                        <div class="collection-card-img" style="background-image: url('Ali/img/ali13.webp');"></div>
-                        <h3 class="collection-card-title">Accessories</h3>
+                        <div class="collection-card-img" style="background-image: url('img/ali13.webp');"></div>
+                        <h3 class="collection-card-title">The Backpack</h3>
                     </a>
                 </div>
             </div>
@@ -84,44 +113,57 @@
         
         <section class="section" id="shop">
             <div class="container">
-                <h2 class="section-title">Our Products</h2>
+                <h2 class="section-title">The Collection</h2>
                 <div class="product-grid">
                     
-                    <div class="product-card" data-name="Black Sneakers" data-price="79.99" data-img="Ali/img/ali14.jpeg">
-                        <img src="Ali/img/ali14.jpeg" alt="Black Sneakers" class="product-img">
-                        <div class="product-info">
-                            <h4 class="product-name">Black Sneakers</h4>
-                            <p class="product-price">$79.99</p>
-                        </div>
+                    <div class="product-card" 
+                         data-name="Black Sneakers" 
+                         data-price="79.99" 
+                         data-img="img/ali14.jpeg"
+                         data-desc="A modern icon. Crafted from full-grain sustainable leather with a high-traction rubber outsole, these sneakers redefine all-day comfort with timeless design.">
+                        
+                        <a href="product.html?name=Black%20Sneakers&price=79.99&img=img/ali14.jpeg&desc=A%20modern%20icon.%20Crafted%20from%20full-grain%20sustainable%20leather%20with%20a%20high-traction%20rubber%20outsole%2C%20these%20sneakers%20redefine%20all-day%20comfort%20with%20timeless%20design." class="product-link">
+                            <img src="img/ali14.jpeg" alt="Black Sneakers" class="product-img">
+                            <div class="product-info">
+                                <h4 class="product-name">Black Sneakers</h4>
+                                <p class="product-price">$79.99</p>
+                            </div>
+                        </a>
                         <button class="btn btn-secondary add-cart">Add to Cart</button>
                     </div>
 
-                    <div class="product-card" data-name="White Tee" data-price="29.99" data-img="Ali/img/ali12.webp">
-                        <img src="Ali/img/ali12.webp" alt="White Tee" class="product-img">
-                        <div class="product-info">
-                            <h4 class="product-name">White Tee</h4>
-                            <p class="product-price">$29.99</p>
-                        </div>
+                    <div class="product-card" 
+                         data-name="White Tee" 
+                         data-price="29.99" 
+                         data-img="img/ali12.webp"
+                         data-desc="The perfect foundation. Made from premium 220gsm long-staple cotton, this tee features a structured, modern fit that holds its shape, wash after wash.">
+                        
+                        <a href="product.html?name=White%20Tee&price=29.99&img=img/ali12.webp&desc=The%20perfect%20foundation.%20Made%20from%20premium%20220gsm%20long-staple%20cotton%2C%20this%20tee%20features%20a%20structured%2C%20modern%20fit%20that%20holds%20its%20shape%2C%20wash%20after%20wash." class="product-link">
+                            <img src="img/ali12.webp" alt="White Tee" class="product-img">
+                            <div class="product-info">
+                                <h4 class="product-name">White Tee</h4>
+                                <p class="product-price">$29.99</p>
+                            </div>
+                        </a>
                         <button class="btn btn-secondary add-cart">Add to Cart</button>
                     </div>
 
-                    <div class="product-card" data-name="Black Backpack" data-price="59.99" data-img="Ali/img/ali13.webp">
-                        <img src="Ali/img/ali13.webp" alt="Black Backpack" class="product-img">
-                        <div class="product-info">
-                            <h4 class="product-name">Black Backpack</h4>
-                            <p class="product-price">$59.99</p>
-                        </div>
+                    <div class="product-card" 
+                         data-name="Black Backpack" 
+                         data-price="59.99" 
+                         data-img="img/ali13.webp"
+                         data-desc="Engineered for everyday. This minimalist backpack is constructed from water-resistant ballistic nylon, with dedicated tech sleeves and ergonomic straps for ultimate utility.">
+                        
+                        <a href="product.html?name=Black%20Backpack&price=59.99&img=img/ali13.webp&desc=Engineered%20for%20everyday.%20This%20minimalist%20backpack%20is%20constructed%20from%20water-resistant%20ballistic%20nylon%2C%20with%20dedicated%20tech%20sleeves%20and%20ergonomic%20straps%20for%20ultimate%20utility." class="product-link">
+                            <img src="img/ali13.webp" alt="Black Backpack" class="product-img">
+                            <div class="product-info">
+                                <h4 class="product-name">Black Backpack</h4>
+                                <p class="product-price">$59.99</p>
+                            </div>
+                        </a>
                         <button class="btn btn-secondary add-cart">Add to Cart</button>
                     </div>
 
-                    <div class="product-card" data-name="Grey Hoodie" data-price="69.99" data-img="https://via.placeholder.com/400x400.png?text=Grey+Hoodie">
-                        <img src="https://via.placeholder.com/400x400.png?text=Grey+Hoodie" alt="Grey Hoodie" class="product-img">
-                        <div class="product-info">
-                            <h4 class="product-name">Grey Hoodie</h4>
-                            <p class="product-price">$69.99</p>
-                        </div>
-                        <button class="btn btn-secondary add-cart">Add to Cart</button>
-                    </div>
                 </div>
             </div>
         </section>
@@ -196,6 +238,7 @@
                 <span>Subtotal</span>
                 <span id="cartTotal">$0.00</span>
             </div>
+            <a href="cart.html" class="btn btn-primary-outline" style="width: 100%; margin-bottom: 10px;">View Full Cart</a>
             <a href="checkout.html" class="btn btn-primary checkout-btn">Proceed to Checkout</a>
         </div>
     </div>
